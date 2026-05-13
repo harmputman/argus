@@ -7,6 +7,7 @@
       v-model:language="settings.browseLanguage"
       v-model:min-rating="settings.browseMinRating"
       v-model:sort-by="settings.browseSortBy"
+      :open="filtersOpen"
       :genres="genres"
       :languages="languages"
       @close="filtersOpen = false"
@@ -31,12 +32,6 @@
         @click="filtersOpen = true"
       >
         <SlidersHorizontal :size="16" class="text-ctp-subtext0" />
-        <span
-          v-if="activeFilterCount"
-          class="bg-ctp-badge text-ctp-crust text-xs font-bold rounded-full w-5 h-5 inline-flex items-center justify-center"
-        >
-          {{ activeFilterCount }}
-        </span>
       </button>
 
       <!-- Warning when no providers are selected -->
@@ -122,16 +117,6 @@ const hasProviders = computed(() => settings.selectedProviders.length > 0)
 const filteredResults = computed(() => {
   if (!settings.hideWatched) return results.value
   return results.value.filter((item) => !watchlistStore.isWatched(item.id))
-})
-
-const activeFilterCount = computed(() => {
-  let count = 0
-  if (settings.browseMediaType !== 'all') count++
-  if (settings.browseGenre) count++
-  if (settings.browseLanguage) count++
-  if (settings.browseMinRating) count++
-  if (settings.browseSortBy !== 'popularity.desc') count++
-  return count
 })
 
 const mediaTypes = computed(() =>
@@ -308,8 +293,8 @@ watch(
 )
 
 // Reload genres when type changes
-watch(() => settings.browseMediaType, () => {
-  settings.browseGenre = ''
+watch(() => settings.browseMediaType, (_, old) => {
+  if (old !== undefined) settings.browseGenre = ''
   loadGenres()
 }, { immediate: true })
 

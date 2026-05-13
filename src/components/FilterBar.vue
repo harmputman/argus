@@ -1,6 +1,7 @@
 <template>
   <aside
-    class="fixed top-0 left-0 bottom-16 w-64 bg-ctp-mantle flex flex-col z-50"
+    class="fixed top-0 left-0 bottom-16 w-64 bg-ctp-mantle flex flex-col z-50 transition-transform duration-300 ease-in-out"
+    :class="open ? 'translate-x-0' : '-translate-x-full'"
   >
     <div class="flex items-center justify-between px-4 py-3 border-b border-ctp-surface0">
       <h2 class="text-sm font-semibold text-ctp-text flex items-center gap-2">
@@ -83,6 +84,7 @@ const minRating = defineModel('minRating', { default: 0 })
 const sortBy = defineModel('sortBy', { default: 'popularity.desc' })
 
 defineProps({
+  open: { type: Boolean, default: false },
   genres: { type: Array, default: () => [] },
   languages: { type: Array, default: () => [] },
 })
