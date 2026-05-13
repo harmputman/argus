@@ -1,6 +1,6 @@
 <template>
   <aside
-    class="absolute top-0 left-0 bottom-0 w-64 bg-ctp-mantle flex flex-col"
+    class="fixed top-0 left-0 bottom-16 w-64 bg-ctp-mantle flex flex-col z-50"
   >
     <div class="flex items-center justify-between px-4 py-3 border-b border-ctp-surface0">
       <h2 class="text-sm font-semibold text-ctp-text flex items-center gap-2">
